@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "chrome",
+            "name": "file:///C:/Users/nyziu/Desktop/Rutgets-materials/Challenges/module5-challenge%20daily-planner/daily-planner/index.html",
+            "request": "launch",
+            "url": "file:///C:/Users/nyziu/Desktop/Rutgets-materials/Challenges/module5-challenge%20daily-planner/daily-planner/index.html"
+        }
+    ]
+}
