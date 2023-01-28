@@ -30,9 +30,11 @@ textarea {
   border-top: 1px dashed #000000;
 }
 
+/* Disabled pointer element for past classes */
 .past {
   background-color: #d3d3d3;
   color: white;
+  /* pointer-events: none; */
 }
 
 .present {
@@ -56,4 +58,20 @@ textarea {
 .saveBtn i:hover {
   font-size: 20px;
   transition: all 0.3s ease-in-out;
+}
+
+.date-picker-container {
+  display: flex;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
+  /* justify-content: center; */
+}
+
+.date-input {
+  width: 200px;
+  margin: 0 auto;
+}
+
+.center {
+  margin: 2rem auto;
 }
