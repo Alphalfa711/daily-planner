@@ -11,10 +11,13 @@ $(function () {
       dayTitle.text(dayjs().format('dddd, MMMM DD, YYYY'))
   var mainContainerHourDivList = $('#main-container').children();  
   var plannerDate = dayjs().format("YYYY-MM-DD");
+  var todaysDate;
+  var daysDiff;
   var plannerObj;
   var currentHour;
-  var currentDay;
 
+
+  
   function loadLocalStorage() {
     plannerObj = JSON.parse(localStorage.getItem('dailyPlanner'))
     if (!plannerObj) {
@@ -31,7 +34,8 @@ $(function () {
   //* function? How can DOM traversal be used to get the "hour-x" id of the
   //* time-block containing the button that was clicked? How might the id be
   //* useful when saving the description in local storage?
-  $('.saveBtn').on('click', function (event) {
+
+  $('.saveBtn').on('click', function () {
 
     updateDate = plannerDate;
     console.log("🚀 ~ file: script.js:52 ~ updateDate", updateDate)
@@ -52,7 +56,7 @@ $(function () {
       + " @ " 
       + $(this).parent().children('div').first().text() )
     
-      plannerObj[updateDate][updateHour] = updateText;
+    plannerObj[updateDate][updateHour] = updateText;
     localStorage.setItem('dailyPlanner', JSON.stringify(plannerObj));
   })
 
@@ -66,60 +70,59 @@ $(function () {
   function updatePlannerTheme () {
 
     //* Reset class for each div that is a first child of maincontainer
-    mainContainerHourDivList.children('div').removeClass();
-    mainContainerHourDivList.children('div').addClass("col-2 col-md-1 hour text-center py-3")
+    mainContainerHourDivList.removeClass();
+    // mainContainerHourDivList.children('div').removeClass();
+    mainContainerHourDivList.addClass("row time-block")
+    // mainContainerHourDivList.children('div').addClass("col-2 col-md-1 hour text-center py-3")
 
     //* Remove content of each textarea element that is a child of maincontainer
     mainContainerHourDivList.children('textarea').val('')
     
+    //* Current date
+    // todo: user palnner date to get current date
+    // todo: try to compare planner date with todays date instead
+
+
+
     mainContainerHourDivList.each(function () {  
       
       console.log($(this))
 
       currentHour = parseInt(dayjs().format('HH'));
-      currentDay = parseInt(dayjs().format('DD'));
-      
-      // Reset text
-      var thisHour = parseInt($(this).attr('data-hour'))
-      
-      // if (currentDay > parseInt(dayjs(plannerDate).format('DD'))) {
-        
-      //   $(this).addClass('past');
 
-      // } else {
-          
+      todaysDate = dayjs().format('YYYY-MM-DD');
+      
+
+      daysDiff = dayjs(plannerDate).diff(dayjs(todaysDate), 'day')
+
+
+      if ( daysDiff === 0 ) {
+        var thisHour = parseInt($(this).attr('data-hour'))
         if (thisHour === currentHour) {
           $(this).addClass('present')
         } else if ( thisHour > currentHour ) {
           $(this).addClass('future')
         } else {
           $(this).addClass('past')  
+          console.log(this)
         }
-      
-      
-
-        
-      
-      
-      //! Re-formt this to take value from date picker
-      
-      // var plannerDate = '2023-01-25';
-      
-      var plannerHour = $(this).attr('id')
-      
-      if ( plannerDate in plannerObj ) {
-        // console.log("line 84, this:", $(this))
-        if ( plannerHour in plannerObj[plannerDate]) {
-          // console.log("line 86, this:", $(this))
-          // $(this).children('textarea').first().text(plannerObj[plannerDate][plannerHour])
-          $(this).children('textarea').first().val(plannerObj[plannerDate][plannerHour])
-        }
+      } else if ( daysDiff < 0 ) {
+        $(this).addClass('past');  
+      } else {
+        $(this).addClass('future')
       }
       
       
-      
-      
-      
+      //* Update planner content      
+
+      var plannerHour = $(this).attr('id')
+
+      if ( plannerDate in plannerObj ) {
+        // console.log("line 84, this:", $(this))
+        if ( plannerHour in plannerObj[plannerDate]) {
+          $(this).children('textarea').first().val(plannerObj[plannerDate][plannerHour])
+        }
+      }
     });
   }
     
@@ -164,9 +167,10 @@ $(function () {
     }
   });
 
-  //Update time 
+  // Update time 
   loadLocalStorage();
   updatePlannerTheme();
   // Start updating time every second
-  // var timer = setInterval(updateTime, 1000);
+  var timer = setInterval(updateTime, 1000);
+
 });
