@@ -39,3 +39,8 @@ Libraries: day.js
 
 Below is a demo demonstrating functionality of the  app
 
+![App Demo](assets/video/Work%20Day%20Scheduler%20(2).gif)
+
+### Update confirmation alert 
+
+![Alert confirmation on planner update](./assets/images/Update%20confirmation.png)
