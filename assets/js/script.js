@@ -1,9 +1,6 @@
-//* Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-//* the code isn't run until the browser has finished rendering all the elements
-//* in the html.
 $(function () {
 
-  // Global variables
+  //* Global variables
   var timeTitle = $('#currentTime');
   var dayTitle = $('#currentDay');
   //* Display the current date in the header of the page.
@@ -17,7 +14,23 @@ $(function () {
   var currentHour;
 
 
+  /**
+   * Initiate function after all content of the file has been loaded
+   */
+  function init() {
+    // Start updating time every second
+    var timer = setInterval(updateTime, 1000);
+    //* Update time 
+    loadLocalStorage();
+    //* Update planner elements using today's date
+    updatePlanner();    
+  }
 
+
+  /**
+   * Load content of localStorage into plannerObj
+   * If localStorage is emplty set it to an empty object 
+   */ 
   function loadLocalStorage() {
     plannerObj = JSON.parse(localStorage.getItem('dailyPlanner'))
     if (!plannerObj) {
@@ -26,70 +39,75 @@ $(function () {
   }
 
 
-
-  
-  //* Add a listener for click events on the save button. This code should
-  //* use the id in the containing time-block as a key to save the user input in
-  //* local storage. HINT: What does `this` reference in the click listener
-  //* function? How can DOM traversal be used to get the "hour-x" id of the
-  //* time-block containing the button that was clicked? How might the id be
-  //* useful when saving the description in local storage?
-
+  /** 
+   * Listen for clicks on any button with clas .saveBtn
+   * on click update DOM element and localStorage
+   * Notify user once completed
+   */
   $('.saveBtn').on('click', function () {
-
-    updateDate = plannerDate;
-    console.log("🚀 ~ file: script.js:52 ~ updateDate", updateDate)
-    updateHour = $(this).parent().attr('id');
-    console.log("🚀 ~ file: script.js:53 ~ updateHour", updateHour)
-    updateText = $(this).parent().children('textarea').first().val();
-    console.log("🚀 ~ file: script.js:56 ~ updateText", updateText)
     
+    //* Get selected date from datepicker
+    updateDate = plannerDate;
+    //* Find out hour id of the clicked button's parent
+    updateHour = $(this).parent().attr('id');
+    //* Find out value of textare of buttons sibling
+    updateText = $(this).parent().children('textarea').first().val();
+    
+    //* Check to make sure date key excist in localStorage for date selected from datepicker
+    //* If date excist, update key value represented by hour inside it's object
     if ( updateDate in plannerObj ) {
       plannerObj[updateDate][updateHour] = updateText;
     } else {
+      //* Create key first, then update key value represented by hour inside it's object
       plannerObj[updateDate] = {}
       plannerObj[updateDate][updateHour] = updateText;
     }
     
+    //* Notify user about the update
     alert("Successfully updated planner for " 
       + updateDate 
       + " @ " 
       + $(this).parent().children('div').first().text() )
     
+      //* Update plannerObj and localStorage
     plannerObj[updateDate][updateHour] = updateText;
     localStorage.setItem('dailyPlanner', JSON.stringify(plannerObj));
   })
 
 
-  //* Add code to apply the past, present, or future class to each time
-  //* block by comparing the id to the current hour. HINTS: How can the id
-  //* attribute of each time-block be used to conditionally add or remove the
-  //* past, present, and future classes? How can Day.js be used to get the
-  //* current hour in 24-hour time?
-
-  function updatePlannerTheme () {
-
+  /**
+   * Reset palanner color formatting and text
+   */
+  function resetPlanner() {
     //* Reset class for each div that is a first child of maincontainer
     mainContainerHourDivList.removeClass();
-    // mainContainerHourDivList.children('div').removeClass();
     mainContainerHourDivList.addClass("row time-block")
-    // mainContainerHourDivList.children('div').addClass("col-2 col-md-1 hour text-center py-3")
 
     //* Remove content of each textarea element that is a child of maincontainer
     mainContainerHourDivList.children('textarea').val('')
-    
+  }
+  
 
+  /**
+   * Update color and content for each hour in the planners
+   */
+  function updatePlanner () {
+
+    //* Reset planner color formatting and text
+    resetPlanner();
+        
+    //* Get current time and date
     currentHour = parseInt(dayjs().format('HH'));
-
     todaysDate = dayjs().format('YYYY-MM-DD');
 
-    //* Loop
+    //* Calculate difference in days between today's date and date selected by user on datepicker
+    daysDiff = dayjs(plannerDate).diff(dayjs(todaysDate), 'day')
+
+    //* Loop throught each div that is a first child of main-container
     mainContainerHourDivList.each(function () {  
-      
 
-      daysDiff = dayjs(plannerDate).diff(dayjs(todaysDate), 'day')
-
-
+      //* Update planner class / color
+      //* If planner date is set to today check for hour before asigning additional class
       if ( daysDiff === 0 ) {
         var thisHour = parseInt($(this).attr('data-hour'))
         if (thisHour === currentHour) {
@@ -100,29 +118,27 @@ $(function () {
           $(this).addClass('past')  
           console.log(this)
         }
+      //* Format planner's day as past if user selected date that is behind today's date
       } else if ( daysDiff < 0 ) {
         $(this).addClass('past');  
-      } else {
+      //* Format planner's day as future if user selected date that is ahead of today's date
+      } else {        
         $(this).addClass('future')
       }
       
-      
+
       //* Update planner content      
-
       var plannerHour = $(this).attr('id')
-
+      //* If planner date key excist in localStorage check to see if key for hour set to div id currently in loop excist and if so display it's value
       if ( plannerDate in plannerObj ) {
-        // console.log("line 84, this:", $(this))
         if ( plannerHour in plannerObj[plannerDate]) {
           $(this).children('textarea').first().val(plannerObj[plannerDate][plannerHour])
         }
       }
     });
   }
-    
 
-  
-  
+
   /**
    * Update time
    */
@@ -133,7 +149,8 @@ $(function () {
     //* Update date only when clock shows midnight
     if (timeTitle == '12:00:00AM') {
       dayTitle.text(dayjs().format('dddd, MMMM DD, YYYY'))
-      updatePlannerTheme();
+      //* Reload page at midnight
+      location.reload();
     }
   }
   
@@ -142,18 +159,13 @@ $(function () {
    */
   $( "#datepicker" ).datepicker({
     dateFormat: "yy-mm-dd",
-    // setDate: dayjs().format("YYYY-MM-DD"),
     showButtonPanel: true,        
     onSelect: function () {
       plannerDate = $(this).val();
-      updatePlannerTheme();
+      updatePlanner();
     }
   });
-
-  // Update time 
-  loadLocalStorage();
-  updatePlannerTheme();
-  // Start updating time every second
-  var timer = setInterval(updateTime, 1000);
-
+  
+  //* Start updating page
+  init();
 });
