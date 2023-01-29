@@ -17,7 +17,7 @@ $(function () {
   var currentHour;
 
 
-  
+
   function loadLocalStorage() {
     plannerObj = JSON.parse(localStorage.getItem('dailyPlanner'))
     if (!plannerObj) {
@@ -78,19 +78,13 @@ $(function () {
     //* Remove content of each textarea element that is a child of maincontainer
     mainContainerHourDivList.children('textarea').val('')
     
-    //* Current date
-    // todo: user palnner date to get current date
-    // todo: try to compare planner date with todays date instead
 
+    currentHour = parseInt(dayjs().format('HH'));
 
+    todaysDate = dayjs().format('YYYY-MM-DD');
 
+    //* Loop
     mainContainerHourDivList.each(function () {  
-      
-      console.log($(this))
-
-      currentHour = parseInt(dayjs().format('HH'));
-
-      todaysDate = dayjs().format('YYYY-MM-DD');
       
 
       daysDiff = dayjs(plannerDate).diff(dayjs(todaysDate), 'day')
@@ -126,17 +120,6 @@ $(function () {
     });
   }
     
-  
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // TODO: the values of the corresponding textarea elements. HINT: How can the id
-  // TODO: attribute of each time-block be used to do this?
-  
-  //? Define way to store in localStorage
-  
-  
-  
-
-
 
   
   
