@@ -1,99 +1,41 @@
-# 05 Third-Party APIs: Work Day Scheduler
+# Work Day Scheduler
 
-## Your Task
+##  Github repo link
 
-Create a simple calendar application that allows a user to save events for each hour of the day by modifying starter code. This app will run in the browser and feature dynamically updated HTML and CSS powered by jQuery.
+[Daily Planner Github Repo Link](https://github.com/Alphalfa711/daily-planner)
 
-You'll need to use the [Day.js](https://day.js.org/en/) library to work with date and time. Be sure to read the documentation carefully and concentrate on using Day.js in the browser.
+## Link to deployed website
 
-## User Story
+[Daily Planner Website](https://alphalfa711.github.io/daily-planner/)
 
-```md
-AS AN employee with a busy schedule
-I WANT to add important events to a daily planner
-SO THAT I can manage my time effectively
+## Description
+
+```
+This is a simple calendar applicaiton that uses localStorage to allow users to save events for each hour of the day (9AM-5PM) on any current or future date so they can manage their time effectively.
+
+Planner user visual color indicator for time which user grey color to diplay days/hours that heppened in the past, red color for current day and hour, and green color for future day or hour.
+
+User has ability to add, remove or update planner for current or future time slot.
+Editing for events that happened in the past is disabled.
+
+This app will run in the browser and feature dynamically updated HTML and CSS powered by jQuery.
+Frameworks: Bootstrap
+Libraries: day.js
+
 ```
 
-## Acceptance Criteria
+## Steps
 
-```md
-GIVEN I am using a daily planner to create a schedule
-WHEN I open the planner
-THEN the current day is displayed at the top of the calendar
-WHEN I scroll down
-THEN I am presented with timeblocks for standard business hours
-WHEN I view the timeblocks for that day
-THEN each timeblock is color coded to indicate whether it is in the past, present, or future
-WHEN I click into a timeblock
-THEN I can enter an event
-WHEN I click the save button for that timeblock
-THEN the text for that event is saved in local storage
-WHEN I refresh the page
-THEN the saved events persist
+```
+1. When the page loads user is presented with a planner showing events for today's date
+2. User can update event for each hour by clicking on textarea, updating it's content and clicking save button located to the righ of each hour block
+3, After each completed update user will see a confirmation in a form of alert
+4. To add/update future event user can click on calendar located below current time and date and select different date.
 ```
 
-The following animation demonstrates the application functionality:
 
-<!-- @TODO: create ticket to review/update image) -->
-![A user clicks on slots on the color-coded calendar and edits the events.](./05-third-party-apis-homework-demo.gif)
 
-## Grading Requirements
+## Mock-Up
 
-> **Note**: If a Challenge assignment submission is marked as “0”, it is considered incomplete and will not count towards your graduation requirements. Examples of incomplete submissions include the following:
->
-> * A repository that has no code
->
-> * A repository that includes a unique name but nothing else
->
-> * A repository that includes only a README file but nothing else
->
-> * A repository that only includes starter code
+Below is a demo demonstrating functionality of the  app
 
-This Challenge is graded based on the following criteria:
-
-### Technical Acceptance Criteria: 40%
-
-* Satisfies all of the above acceptance criteria plus the following:
-
-  * Uses a date utility library to work with date and time
-
-### Deployment: 32%
-
-* Application deployed at live URL
-
-* Application loads with no errors
-
-* Application GitHub URL submitted
-
-* GitHub repo contains application code
-
-### Application Quality: 15%
-
-* Application user experience is intuitive and easy to navigate
-
-* Application user interface style is clean and polished
-
-* Application resembles the mock-up functionality provided in the Challenge instructions
-
-### Repository Quality: 13%
-
-* Repository has a unique name
-
-* Repository follows best practices for file structure and naming conventions
-
-* Repository follows best practices for class/id naming conventions, indentation, quality comments, etc.
-
-* Repository contains multiple descriptive commit messages
-
-* Repository contains quality README file with description, screenshot, and link to deployed application
-
-## Review
-
-You are required to submit the following for review:
-
-* The URL of the deployed application
-
-* The URL of the GitHub repository, with a unique name and a README describing the project
-
-- - -
-© 2022 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.

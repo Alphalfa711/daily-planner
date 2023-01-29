@@ -145,9 +145,12 @@ $(function () {
   function updateTime() {
     //* Update time every second
     timeTitle.text(dayjs().format('hh:mm:ssA'));    
+    // console.log("🚀 ~ file: script.js:149 ~ updateTime ~ timeTitle", timeTitle.text())
+    // console.log("🚀 ~ file: script.js:149 ~ updateTime ~ timeTitle",typeof timeTitle.text())
+    
 
     //* Update date only when clock shows midnight
-    if (timeTitle == '12:00:00AM') {
+    if (timeTitle.text() == '12:00:00AM') {
       dayTitle.text(dayjs().format('dddd, MMMM DD, YYYY'))
       //* Reload page at midnight
       location.reload();
