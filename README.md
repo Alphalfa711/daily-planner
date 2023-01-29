@@ -11,9 +11,11 @@
 ## Description
 
 ```
-This is a simple calendar applicaiton that uses localStorage to allow users to save events for each hour of the day (9AM-5PM) on any current or future date so they can manage their time effectively.
+This is a simple calendar applicaiton that uses localStorage to allow users to save events for each hour 
+of the day (9AM-5PM) on any current or future date so they can manage their time effectively.
 
-Planner user visual color indicator for time which user grey color to diplay days/hours that heppened in the past, red color for current day and hour, and green color for future day or hour.
+Planner user visual color indicator for time which user grey color to diplay days/hours that heppened 
+in the past, red color for current day and hour, and green color for future day or hour.
 
 User has ability to add, remove or update planner for current or future time slot.
 Editing for events that happened in the past is disabled.
@@ -28,9 +30,11 @@ Libraries: day.js
 
 ```
 1. When the page loads user is presented with a planner showing events for today's date
-2. User can update event for each hour by clicking on textarea, updating it's content and clicking save button located to the righ of each hour block
+2. User can update event for each hour by clicking on textarea, updating it's content and clicking 
+    save button located to the righ of each hour block
 3, After each completed update user will see a confirmation in a form of alert
-4. To add/update future event user can click on calendar located below current time and date and select different date.
+4. To add/update future event user can click on calendar located below current time and date and 
+    select different date.
 ```
 
 
