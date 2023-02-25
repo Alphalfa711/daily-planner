@@ -2,11 +2,11 @@
 
 ##  Github repo link
 
-[Daily Planner Github Repo Link](https://github.com/Alphalfa711/daily-planner)
+[Daily Planner Github Repo Link](https://github.com/mnyzio/daily-planner)
 
 ## Link to deployed website
 
-[Daily Planner Website](https://alphalfa711.github.io/daily-planner/)
+[Daily Planner Website](https://mnyzio.github.io/daily-planner/)
 
 ## Description
 
